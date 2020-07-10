@@ -30,7 +30,7 @@ function getWeather() {
         //    var currentDate = moment.js? 
 
         currentdata.append($("<p>").text("City: " + cityName));
-        currentdata.append($("<img>").attr("src", "https://lh3.googleusercontent.com/proxy/RIfxpWrBWMhJVp6WxWdKOQ7W5jhUFAdnQZWb39evsSKNVwehswi93b6ywk8Jdjol1Jgzf2yemwioGtnYLBhy-qs6ZBsQKrtVKaDqQ8jkx0qB1MvwcNGMhU5Yf_wGODAzrdSBa2U_3UP2n-84MCcmeZTzgMBYQu6BrnDpOUt1ucuMoYofmlUmTR7hkiTBsv0NAoaNzTjIatXjEjc797C3"));
+        // currentdata.append($("<img>").attr("src", "https://lh3.googleusercontent.com/proxy/RIfxpWrBWMhJVp6WxWdKOQ7W5jhUFAdnQZWb39evsSKNVwehswi93b6ywk8Jdjol1Jgzf2yemwioGtnYLBhy-qs6ZBsQKrtVKaDqQ8jkx0qB1MvwcNGMhU5Yf_wGODAzrdSBa2U_3UP2n-84MCcmeZTzgMBYQu6BrnDpOUt1ucuMoYofmlUmTR7hkiTBsv0NAoaNzTjIatXjEjc797C3"));
         //display current temperature, humidity, wind speed and UV index
         var cTemp = response1.main.temp;
         cTemp = Math.floor((cTemp - 273.15) * 1.8 + 32);
@@ -52,34 +52,45 @@ function getWeather() {
             var pTag = $("<p>").text("UV Index: " + UVIndex)
             currentdata.append(pTag);
             pTag.addClass("index");
-
+            var UVcond 
+ //UV Index color that indicates whether the conditions are favorable, moderate, or severe
             if (UVIndex < 2) {
                 $(".index").css("background-color", "#82E0AA");
+                UVcond = $("<p>").text("Favorable")
+                currentdata.append(UVcond);
+
 
             }
             else if (UVIndex < 6){
                 $(".index").css("background-color", "#FFF176");
-
+                UVcond = $("<p>").text("Moderate")
+                currentdata.append(UVcond);
             }
             else if (UVIndex < 8) {
                 $(".index").css("background-color", "#FFB74D");
+                UVcond = $("<p>").text("Moderate")
+                currentdata.append(UVcond);
             }
             else if (UVIndex < 11) {
                 $(".index").css("background-color", "red");
+                UVcond = $("<p>").text("Severe")
+                currentdata.append(UVcond);
             }
             else {
                 $(".index").css("background-color", "firebrick");
+                UVcond = $("<p>").text("SEVERE")
+                currentdata.append(UVcond);
             }
 
 
         })
 
 
-        //objects and their values append to current conditions on html
+       
 
 
 
-        //UV Index color that indicates whether the conditions are favorable, moderate, or severe
+       
         //UV index will have specific parameters, if/if else/else statements to color-code conditions 
 
 
