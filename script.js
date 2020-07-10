@@ -93,8 +93,6 @@ function getWeather() {
 
             dailyData.forEach(day => {
                 showFiveDay(day);
-                // console.log(day);
-                // console.log(weekDay); 
           }); 
         
         })
@@ -104,30 +102,36 @@ function getWeather() {
 function showFiveDay(day){
     //all the logic to add html to screen for 5 day
 
-    var forecastData = $("#forecast").append("<div>");   
+    // $("#forecast").addClass("card-deck");
+    var forecastData = $("#forecast").append("<div>"); 
+    $(forecastData).addClass("card-deck");
     $(forecastData).addClass("dayCard col-12 col-md-5 col-lg-2");
+
+      //nest all p tags in new div
          // displays the date
-           var weekDay = $("<label>").html(moment(day.dt_txt).format('dddd'));
+           var weekDay = $("<p>").html(moment(day.dt_txt).format('dddd'));
            forecastData.append(weekDay);
            weekDay.addClass("weekDay");
-           forecastData.append("<br>");
+           
 
-           var weekDate = $("<label>").html(moment(day.dt_txt).format("MMM Do YY"));
+           var weekDate = $("<p>").html(moment(day.dt_txt).format('LL'));
            forecastData.append(weekDate);
-           forecastData.append("<br>");
+           
 
          //an icon representation of weather conditions
 
          //the temperature
             var fiveTemp = day.main.temp
             fiveTemp = Math.floor((fiveTemp - 273.15) * 1.8 + 32);
-            forecastData.append($("<label>").text(fiveTemp + "\u00B0 Fahrenheit"));
-            forecastData.append("<br>");
+            forecastData.append($("<p>").text(fiveTemp + "\u00B0 F"));
+            
             
          //the humiditity
             var fiveHumid = day.main.humidity
-            forecastData.append($("<label>").text("Humidity: " + fiveHumid + "%"));
+            forecastData.append($("<p>").text("Humidity: " + fiveHumid + "%"));
             // console.log(fiveHumid)
+
+            
 }
 
     // save search history

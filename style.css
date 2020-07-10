@@ -1,5 +1,5 @@
 body{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Asap', sans-serif;
     font-size: 23px;
     margin: 0;    
     color: #000000;
@@ -81,14 +81,14 @@ input{
 
 .searchBtn{
     margin-left: 5px;
-    background-color: rgb(50, 99, 173);
+    background-color: lightskyblue;
     padding: 5px 10px;
     border-radius: 5px;
     color: white;
 }
 .clearBtn{
     margin-left: 5px;
-    background-color: rgb(189, 63, 63);
+    background-color: crimson;
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
@@ -99,7 +99,7 @@ input{
     padding-right:0;
     top:78px;
 }
-#current-weather{
+#current-weather, #forecastWrap {
     margin:10px 0 10px 10px;
     padding: 20px 0 20px 20px;
     border: 1px solid #777777;
