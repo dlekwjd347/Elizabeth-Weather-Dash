@@ -135,7 +135,7 @@ input{
     border-radius:5px;
     
 }
-.dayCard > *{
+.dayCard {
     margin-bottom:10px; 
     display: block;
 }

@@ -1,12 +1,7 @@
-
-
 var userChoice = '';
-var currentWeather = "";
-var fiveDay = "";
-
-
-
-
+var currentWeather = ``;
+var fiveDay = ``;
+var dailyData =[]; 
 
 //get weather function for both current weather and future weather by button at once 
 
@@ -14,7 +9,7 @@ function getWeather() {
     //view current weather conditions for that city
     var apiKey = 'f4984700ddd88edc79d0eb1beb636dff'
     userChoice = $("#city-input").val().trim();
-    currentWeather = "http://api.openweathermap.org/data/2.5/weather?q=" + userChoice + "&appid=" + apiKey;
+    currentWeather = `http://api.openweathermap.org/data/2.5/weather?q=${userChoice}&appid=${apiKey}`;
     $.ajax({
         url: currentWeather,
         method: "GET"
@@ -42,7 +37,7 @@ function getWeather() {
         var cWind = response1.wind.speed;
         currentdata.append($("<p>").text("Wind Speed: " + cWind + "mph"));
 
-        var qUVindex = "http://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat=" + response1.coord.lat + "&lon=" + response1.coord.lon;
+        var qUVindex = `http://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${response1.coord.lat}&lon=${response1.coord.lon}`;
 
         $.ajax({
             url: qUVindex,
@@ -56,76 +51,89 @@ function getWeather() {
  //UV Index color that indicates whether the conditions are favorable, moderate, or severe
             if (UVIndex < 2) {
                 $(".index").css("background-color", "#82E0AA");
-                UVcond = $("<p>").text("Favorable")
+                UVcond = $("<p>").text("Favorable");
                 currentdata.append(UVcond);
 
 
             }
             else if (UVIndex < 6){
                 $(".index").css("background-color", "#FFF176");
-                UVcond = $("<p>").text("Moderate")
+                UVcond = $("<p>").text("Moderate");
                 currentdata.append(UVcond);
             }
             else if (UVIndex < 8) {
                 $(".index").css("background-color", "#FFB74D");
-                UVcond = $("<p>").text("Moderate")
+                UVcond = $("<p>").text("Moderate");
                 currentdata.append(UVcond);
             }
             else if (UVIndex < 11) {
                 $(".index").css("background-color", "red");
-                UVcond = $("<p>").text("Severe")
+                UVcond = $("<p>").text("Severe");
                 currentdata.append(UVcond);
             }
             else {
                 $(".index").css("background-color", "firebrick");
-                UVcond = $("<p>").text("SEVERE")
+                UVcond = $("<p>").text("SEVERE");
                 currentdata.append(UVcond);
             }
 
 
         })
-
-
-       
-
-
-
-       
-        //UV index will have specific parameters, if/if else/else statements to color-code conditions 
-
-
-
-        //view future weather conditions for that city
-        // $.ajax({
-        //     url: fiveDay,
-        //     method: "GET"
-        // }).then(function(response2) {
-        //     console.log(response2);
-
-        fiveDay = "api.openweathermap.org/data/2.5/forecast?q=" + userChoice + "&appid=" + apiKey
-
-        //displays the date, an icon representation of weather conditions, the temperature, and the humidity
-
-
-
-        //object values display on future conditions element
-
-
-
     })
 
+    // view future weather conditions for that city
+        fiveDay = `http://api.openweathermap.org/data/2.5/forecast?q=${userChoice}&appid=${apiKey}`;
+        $.ajax({
+            url: fiveDay,
+            method: "GET"
+        }).then(function(response2) {
+            console.log(response2);
+            console.log(fiveDay);
+            dailyData = response2.list.filter((timeObj, i) => i % 8 === 0)
 
-    //search history
-
+            dailyData.forEach(day => {
+                showFiveDay(day);
+                console.log(day);
+                console.log(weekDay); 
+          }); 
+        
+        })
 
 }
+
+function showFiveDay(day){
+    //all the logic to add html to screen for 5 day
+
+    var forecastData = $("#forecast").append("<div>");   
+         // displays the date
+           var weekDay = $("<label>").html(moment(day.dt_txt).format('dddd'));
+           forecastData.append(weekDay);
+           $(forecastData).addClass("dayCard col-12 col-md-5 col-lg-2");
+
+         //an icon representation of weather conditions
+
+         //the temperature
+            var fiveTemp = day.main.temp
+            fiveTemp = Math.floor((fiveTemp - 273.15) * 1.8 + 32);
+            forecastData.append($("<label>").text(fiveTemp + "\u00B0 Fahrenheit"));
+            
+         //the humiditity
+            var fiveHumid = day.main.humidity
+            forecastData.append($("<label>").text(fiveHumid + "%"));
+            // console.log(fiveHumid)
+}
+
+    // save search history
+
+
+
+
+
+
+
 
 $("#searchBtn").on("click", function (event) {
     getWeather();
 
 })
-
-
-
-
 
