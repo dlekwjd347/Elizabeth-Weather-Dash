@@ -89,9 +89,14 @@ function getWeather() {
         }).then(function(response2) {
             console.log(response2);
             console.log(fiveDay);
+            //array for days 
             dailyData = response2.list.filter((timeObj, i) => i % 8 === 0)
 
+            console.log(response2.list.filter((timeObj, i) => i % 8 === 0))
+            // console.log(timeObj)
+            $(".forecastDeck").empty();
             dailyData.forEach(day => {
+                // console.log(day);
                 showFiveDay(day);
           }); 
         
@@ -100,36 +105,50 @@ function getWeather() {
 }
 
 function showFiveDay(day){
+    var fiveTemp = day.main.temp
+        fiveTemp = Math.floor((fiveTemp - 273.15) * 1.8 + 32);
+    var fiveHumid = day.main.humidity
+    var icon = day.weather.icon;
+    console.log(icon)
+
+    const html = `<div class="card">
+                <div class="card-body">
+                        <h5 class="card-title">${moment(day.dt_txt).format('dddd')}</h5>
+                        <h5 class="card-text">${moment(day.dt_txt).format('LL')}</h5>
+                        <img src=${icon} alt="icon" width="20" height="20" />
+                        <p class="card-text"><small class="text-muted">${fiveTemp + "\u00B0 F"}</small></p>
+                        <p class="card-text"><small class="text-muted">Humidity: ${fiveHumid}%</small></p>
+        </div>
+</div>`
+$(".forecastDeck").append(html);
     //all the logic to add html to screen for 5 day
 
     // $("#forecast").addClass("card-deck");
-    var forecastData = $("#forecast").append("<div>"); 
-    $(forecastData).addClass("card-deck");
-    $(forecastData).addClass("dayCard col-12 col-md-5 col-lg-2");
+    // var forecastData = $("#forecast").append("<div class='card-deck'>"); 
+    // $(forecastData).addClass("dayCard col-12 col-md-5 col-lg-2");
 
-      //nest all p tags in new div
-         // displays the date
-           var weekDay = $("<p>").html(moment(day.dt_txt).format('dddd'));
-           forecastData.append(weekDay);
-           weekDay.addClass("weekDay");
+    //   //nest all p tags in new div
+    //      // displays the date
+    //        var weekDay = $("<p>").html(moment(day.dt_txt).format('dddd'));
+    //        forecastData.append(weekDay);
+    //        weekDay.addClass("weekDay");
            
 
-           var weekDate = $("<p>").html(moment(day.dt_txt).format('LL'));
-           forecastData.append(weekDate);
+    //        var weekDate = $("<p>").html(moment(day.dt_txt).format('LL'));
+    //        forecastData.append(weekDate);
            
 
-         //an icon representation of weather conditions
+    //      //an icon representation of weather conditions
 
-         //the temperature
-            var fiveTemp = day.main.temp
-            fiveTemp = Math.floor((fiveTemp - 273.15) * 1.8 + 32);
-            forecastData.append($("<p>").text(fiveTemp + "\u00B0 F"));
+    //      //the temperature
+    //         
+    //         forecastData.append($("<p>").text(fiveTemp + "\u00B0 F"));
             
             
-         //the humiditity
-            var fiveHumid = day.main.humidity
-            forecastData.append($("<p>").text("Humidity: " + fiveHumid + "%"));
-            // console.log(fiveHumid)
+    //      //the humiditity
+    //         var fiveHumid = day.main.humidity
+    //         forecastData.append($("<p>").text("Humidity: " + fiveHumid + "%"));
+    //         // console.log(fiveHumid)
 
             
 }

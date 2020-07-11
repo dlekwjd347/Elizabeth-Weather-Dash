@@ -32,7 +32,7 @@ h1,h2,h3,h4{
 }
 #searchPanel{    
     padding: 10px 10px 0 10px;
-    width: 320px;
+    width: 290px;
     margin-bottom:0;
     background-color: rgb(242, 242, 242);      
     height: 100%;   
@@ -94,7 +94,7 @@ input{
     border-radius: 5px;
 }
 #mainContent{
-    margin-left:320px;
+    margin-left:280px;
     margin-right:0;
     padding-right:0;
     top:78px;
@@ -107,9 +107,6 @@ input{
     border-radius: 5px 0 0 5px;
     
 }
-.currentWeatherImg{
-    height:75px; 
-}
 
 #UVIndex{
     display: inline;
@@ -121,21 +118,14 @@ input{
 #forecast > h3{
     padding-left: 10px;
 }
-#dayCardContainer{    
-    justify-content: center;
-    flex-wrap:wrap;
-    padding-right: 1px;
-    align-content: stretch;
-   
-}
-.dayCard{
+
+.card{
     padding: 10px;
-    background-color: lightblue;
-    margin: 10px;
-    border-radius:5px;
-    
+    background-color: rgb(202, 230, 240);
+    margin: 0px;
+  
 }
-.dayCard {
+.card {
     margin-bottom:10px; 
     display: block;
 }
@@ -149,12 +139,6 @@ input{
     #mainContent{
         margin-left:230px;
     }
-}
-
-img {
-    height: 60px;
-    width: 60px;
- 
 }
 
 .city{
