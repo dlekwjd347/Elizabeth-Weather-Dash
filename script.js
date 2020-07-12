@@ -113,30 +113,34 @@ function showFiveDay(day) {
 }
 
 // save search history
-var newCity = [];
+
 
 function saveCity() {
+    userChoice = $("#city-input").val().trim();
        if (userChoice !== "") {
-
-       var savedCities = JSON.parse(window.localStorage.getItem(userChoice)) || [];
+        
+       var savedCities = window.localStorage.getItem('city', userChoice) || [];
+       var newCity = {};
        savedCities.push(newCity);
-       window.localStorage.setItem(userChoice, JSON.stringify(userChoice));
+       window.localStorage.setItem('city', JSON.stringify(savedCities));
        window.location.href = "index.html";
 
    }
+   displayCities()
 }
 
 var clearbtn = document.getElementById("clearbtn");
 
 function displayCities() {
     //parse object of arrays in local storage or else if empty will just be empty
-    var getCities = JSON.parse(window.localStorage.getItem(userChoice)) || [];
+    var getCities = JSON.parse(window.localStorage.getItem('city', userChoice)) || [];
     
     getCities.forEach(function (userChoice) {
-      var saveSearch = $("#searches").text(userChoice);
+        var saveSearch = $("<p>").text(userChoice);
 
         $("#searches").append(saveSearch);
     });
+
 
 }
 
@@ -146,9 +150,10 @@ function clearSearches() {
 }
 $("#searchBtn").on("click", function (event) {
     event.preventDefault();
-    saveCity()
-    $("#current-weather").empty();
     getWeather();
+    saveCity();
+    $("#current-weather").empty();
+    
     
  })
 
