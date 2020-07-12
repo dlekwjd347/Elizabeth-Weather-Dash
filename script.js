@@ -5,6 +5,7 @@ var dailyData = [];
 
 //get weather function for both current weather and future weather by button at once 
 function getWeather(userChoice) {
+
     //view current weather conditions for that city
     var apiKey = 'f4984700ddd88edc79d0eb1beb636dff'
     userChoice = $("#city-input").val().trim();
@@ -89,7 +90,7 @@ function getWeather(userChoice) {
         });
 
     })
-    // $(currentData).empty();
+   
 }
 
     //all the logic to add html to screen for 5 day
@@ -112,7 +113,23 @@ function showFiveDay(day) {
 }
 
 // save search history
+var newCity = [];
 
+function saveCity() {
+       if (userChoice !== "") {
+
+       var savedCities = JSON.parse(window.localStorage.getItem(userChoice)) || [];
+       //user input storage format 
+    
+       //adding new scores to array of high scores
+       savedCities.push(newCity);
+       //add high scores to local storage
+       window.localStorage.setItem(userChoice, JSON.stringify(userChoice));
+       //change url to scores page
+       window.location.href = "index.html";
+
+   }
+}
 
 
 
@@ -120,7 +137,38 @@ function showFiveDay(day) {
 
 $("#searchBtn").on("click", function (event) {
     event.preventDefault();
+    saveCity()
     $("#current-weather").empty();
     getWeather();
+    
  })
+
+ 
+
+var clearbtn = document.getElementById("clearbtn");
+
+function displayCities() {
+    //parse object of arrays in local storage or else if empty will just be empty
+    var getCities = JSON.parse(window.localStorage.getItem(userChoice)) || [];
+    
+    
+    //for each new score, a new line item to display the score is created
+    getCities.forEach(function (userChoice) {
+        var lineItem = document.createElement("li");
+        var saveSearch = $("#searches").text(userChoice);
+
+        $("#searches").append(saveSearch);
+    });
+
+
+}
+
+function clearSearches() {
+    window.localStorage.removeItem(userChoice);
+    window.location.reload();
+}
+
+$(".clearbtn").on("click", function (event) {
+    clearSearches();
+});
 
