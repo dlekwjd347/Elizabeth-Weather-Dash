@@ -119,31 +119,12 @@ function saveCity() {
        if (userChoice !== "") {
 
        var savedCities = JSON.parse(window.localStorage.getItem(userChoice)) || [];
-       //user input storage format 
-    
-       //adding new scores to array of high scores
        savedCities.push(newCity);
-       //add high scores to local storage
        window.localStorage.setItem(userChoice, JSON.stringify(userChoice));
-       //change url to scores page
        window.location.href = "index.html";
 
    }
 }
-
-
-
-
-
-$("#searchBtn").on("click", function (event) {
-    event.preventDefault();
-    saveCity()
-    $("#current-weather").empty();
-    getWeather();
-    
- })
-
- 
 
 var clearbtn = document.getElementById("clearbtn");
 
@@ -151,15 +132,11 @@ function displayCities() {
     //parse object of arrays in local storage or else if empty will just be empty
     var getCities = JSON.parse(window.localStorage.getItem(userChoice)) || [];
     
-    
-    //for each new score, a new line item to display the score is created
     getCities.forEach(function (userChoice) {
-        var lineItem = document.createElement("li");
-        var saveSearch = $("#searches").text(userChoice);
+      var saveSearch = $("#searches").text(userChoice);
 
         $("#searches").append(saveSearch);
     });
-
 
 }
 
@@ -167,6 +144,13 @@ function clearSearches() {
     window.localStorage.removeItem(userChoice);
     window.location.reload();
 }
+$("#searchBtn").on("click", function (event) {
+    event.preventDefault();
+    saveCity()
+    $("#current-weather").empty();
+    getWeather();
+    
+ })
 
 $(".clearbtn").on("click", function (event) {
     clearSearches();
