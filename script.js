@@ -143,28 +143,23 @@ function displayCities() {
     console.log(getCities)
     newCities.push(getCities);
     $("#city-input").val("");
-    newCities.forEach(function () {
-        var saveSearch = $("<p>").text(getCities);
-        console.log(saveSearch)
-        $("#searches").append(saveSearch);
-    });
+    var saveSearch = $("<p>").text(getCities);
+    $("#searches").append(saveSearch);
 
 }
 function clearSearches() {
-    window.localStorage.removeItem('city');
+    window.localStorage.removeItem("city");
     window.location.reload();
 }
 $("#searchBtn").on("click", function (event) {
     event.preventDefault();
-    // getWeather();
     saveCity();
     $("#current-weather").empty();
-    
-    
-    
+       
  })
 
-$(".clearbtn").on("click", function (event) {
+$("#clear").on("click", function (event) {
+    console.log(event.target);
     clearSearches();
 });
 
