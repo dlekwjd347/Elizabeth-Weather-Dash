@@ -4,7 +4,7 @@ var fiveDay = ``;
 var dailyData = [];
 
 //get weather function for both current weather and future weather by button at once 
-function getWeather() {
+function getWeather(userChoice) {
     //view current weather conditions for that city
     var apiKey = 'f4984700ddd88edc79d0eb1beb636dff'
     userChoice = $("#city-input").val().trim();
@@ -23,11 +23,11 @@ function getWeather() {
         var cHumidity = response1.main.humidity;
         var cWind = response1.wind.speed;
         var cityName = response1.name;
+        console.log(response1);
         var qUVindex = `http://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${response1.coord.lat}&lon=${response1.coord.lon}`;
-        const html = `<div class="card" style="width: 18rem;">
+        const html = `<div class="card" style="width: 25rem;">
                         <ul class="list-group list-group-flush">
-                        <li class="list-group-item">City: ${cityName}</li>
-                        <li class="list-group-item"><img src=http://openweathermap.org/img/wn/${icon}@2x.png alt="icon" width="60" height="60" /></li>
+                        <li class="list-group-item">${cityName} ${moment(response1.dt_txt).format('LL')}<img src=http://openweathermap.org/img/wn/${icon}@2x.png alt="icon" width="60" height="60" /></li>
                         <li class="list-group-item">Current temp: ${cTemp}\u00B0 F</li>
                         <li class="list-group-item">Humidity: ${cHumidity}%</li>
                         <li class="list-group-item">Wind Speed: ${cWind} mph</li>
@@ -69,7 +69,7 @@ function getWeather() {
                 UVcond = $("<p>").text("SEVERE");
                 currentdata.append(UVcond);
             }
-            $(currentdata).append(UV);
+    
            
         })
     })
@@ -89,6 +89,7 @@ function getWeather() {
         });
 
     })
+    // $(currentData).empty();
 }
 
     //all the logic to add html to screen for 5 day
@@ -102,7 +103,7 @@ function showFiveDay(day) {
                 <div class="card-body">
                         <h5 class="card-title">${moment(day.dt_txt).format('dddd')}</h5>
                         <h5 class="card-text">${moment(day.dt_txt).format('LL')}</h5>
-                        <img src=http://openweathermap.org/img/wn/${icon}@2x.png alt="icon" width="20" height="20" />
+                        <img src=http://openweathermap.org/img/wn/${icon}@2x.png alt="icon" width="50" height="50" />
                         <p class="card-text"><small class="text-muted">${fiveTemp + "\u00B0 F"}</small></p>
                         <p class="card-text"><small class="text-muted">Humidity: ${fiveHumid}%</small></p>
         </div>
@@ -118,10 +119,8 @@ function showFiveDay(day) {
 
 
 $("#searchBtn").on("click", function (event) {
+    event.preventDefault();
+    $("#current-weather").empty();
     getWeather();
-    $("#currentData").empty();
-
-    
-
-})
+ })
 
