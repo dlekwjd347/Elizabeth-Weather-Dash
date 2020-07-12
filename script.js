@@ -16,6 +16,8 @@ function getWeather(userChoice) {
     }).then(function (response1) {
         console.log(response1);
         console.log(currentWeather);
+        // if userChoice is not in savedCities then  store it to the local storage
+      
         // city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
         var currentdata = $("#current-weather").append("<div>");
         var cTemp = response1.main.temp;
@@ -118,41 +120,46 @@ function showFiveDay(day) {
 function saveCity() {
     userChoice = $("#city-input").val().trim();
        if (userChoice !== "") {
-        
-       var savedCities = window.localStorage.getItem('city', userChoice) || [];
-       var newCity = {};
-       savedCities.push(newCity);
-       window.localStorage.setItem('city', JSON.stringify(savedCities));
-       window.location.href = "index.html";
-
+        window.localStorage.setItem('city', JSON.stringify(userChoice));
+       var savedCities = window.localStorage.getItem('city') || [];
+       if(savedCities.length > 0){
+           getWeather(savedCities);
+       }
+   
+ 
    }
    displayCities()
 }
 
+console.log(localStorage)
+
 var clearbtn = document.getElementById("clearbtn");
+
+var newCities = [];
 
 function displayCities() {
     //parse object of arrays in local storage or else if empty will just be empty
-    var getCities = JSON.parse(window.localStorage.getItem('city', userChoice)) || [];
-    
-    getCities.forEach(function (userChoice) {
-        var saveSearch = $("<p>").text(userChoice);
-
+    var getCities = JSON.parse(window.localStorage.getItem('city')) || [];
+    console.log(getCities)
+    newCities.push(getCities);
+    $("#city-input").val("");
+    newCities.forEach(function () {
+        var saveSearch = $("<p>").text(getCities);
+        console.log(saveSearch)
         $("#searches").append(saveSearch);
     });
 
-
 }
-
 function clearSearches() {
-    window.localStorage.removeItem(userChoice);
+    window.localStorage.removeItem('city');
     window.location.reload();
 }
 $("#searchBtn").on("click", function (event) {
     event.preventDefault();
-    getWeather();
+    // getWeather();
     saveCity();
     $("#current-weather").empty();
+    
     
     
  })
