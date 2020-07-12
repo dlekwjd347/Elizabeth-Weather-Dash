@@ -4,7 +4,6 @@ var fiveDay = ``;
 var dailyData = [];
 
 //get weather function for both current weather and future weather by button at once 
-
 function getWeather() {
     //view current weather conditions for that city
     var apiKey = 'f4984700ddd88edc79d0eb1beb636dff'
@@ -18,27 +17,22 @@ function getWeather() {
         console.log(currentWeather);
         // city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
         var currentdata = $("#current-weather").append("<div>");
-        console.log(response1.name)
-
-        //display city name and weather icon
-        var cityName = response1.name;
-        //    var currentDate = moment.js? 
-
-        currentdata.append($("<p>").text("City: " + cityName));
-        var icon = response1.weather[0].icon;
-        currentdata.append($("<img>").attr("src", icon));
-        // alt="icon" width="20" height="20")) />
         var cTemp = response1.main.temp;
+        var icon = response1.weather[0].icon;
         cTemp = Math.floor((cTemp - 273.15) * 1.8 + 32);
-        currentdata.append($("<p>").text("Current temp: " + cTemp + "\u00B0 Fahrenheit"));
-
         var cHumidity = response1.main.humidity;
-        currentdata.append($("<p>").text("Humidity: " + cHumidity + "%"));
-
         var cWind = response1.wind.speed;
-        currentdata.append($("<p>").text("Wind Speed: " + cWind + "mph"));
-
+        var cityName = response1.name;
         var qUVindex = `http://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${response1.coord.lat}&lon=${response1.coord.lon}`;
+        const html = `<div class="card" style="width: 18rem;">
+                        <ul class="list-group list-group-flush">
+                        <li class="list-group-item">City: ${cityName}</li>
+                        <li class="list-group-item"><img src=http://openweathermap.org/img/wn/${icon}@2x.png alt="icon" width="60" height="60" /></li>
+                        <li class="list-group-item">Current temp: ${cTemp}\u00B0 F</li>
+                        <li class="list-group-item">Humidity: ${cHumidity}%</li>
+                        <li class="list-group-item">Wind Speed: ${cWind} mph</li>
+                        </div>`
+                        $(currentdata).append(html);
 
         $.ajax({
             url: qUVindex,
@@ -50,12 +44,10 @@ function getWeather() {
             pTag.addClass("index");
             var UVcond
             //UV Index color that indicates whether the conditions are favorable, moderate, or severe
-            if (UVIndex < 2) {
+            if (UVIndex > 2) {
                 $(".index").css("background-color", "#82E0AA");
                 UVcond = $("<p>").text("Favorable");
                 currentdata.append(UVcond);
-
-
             }
             else if (UVIndex < 6) {
                 $(".index").css("background-color", "#FFF176");
@@ -77,11 +69,10 @@ function getWeather() {
                 UVcond = $("<p>").text("SEVERE");
                 currentdata.append(UVcond);
             }
-
-
+            $(currentdata).append(UV);
+           
         })
     })
-
     // view future weather conditions for that city
     fiveDay = `http://api.openweathermap.org/data/2.5/forecast?q=${userChoice}&appid=${apiKey}`;
     $.ajax({
@@ -92,66 +83,31 @@ function getWeather() {
         console.log(fiveDay);
         //array for days 
         dailyData = response2.list.filter((timeObj, i) => i % 8 === 0)
-
-        console.log(response2.list.filter((timeObj, i) => i % 8 === 0))
-        // console.log(timeObj)
         $(".forecastDeck").empty();
         dailyData.forEach(day => {
-            // console.log(day);
             showFiveDay(day);
         });
 
     })
-
 }
 
+    //all the logic to add html to screen for 5 day
 function showFiveDay(day) {
     var fiveTemp = day.main.temp
     fiveTemp = Math.floor((fiveTemp - 273.15) * 1.8 + 32);
     var fiveHumid = day.main.humidity
-    var icon = day.weather.icon;
-    console.log(icon)
+    var icon = day.weather[0].icon;
 
     const html = `<div class="card">
                 <div class="card-body">
                         <h5 class="card-title">${moment(day.dt_txt).format('dddd')}</h5>
                         <h5 class="card-text">${moment(day.dt_txt).format('LL')}</h5>
-                        <img src=${icon} alt="icon" width="20" height="20" />
+                        <img src=http://openweathermap.org/img/wn/${icon}@2x.png alt="icon" width="20" height="20" />
                         <p class="card-text"><small class="text-muted">${fiveTemp + "\u00B0 F"}</small></p>
                         <p class="card-text"><small class="text-muted">Humidity: ${fiveHumid}%</small></p>
         </div>
 </div>`
     $(".forecastDeck").append(html);
-    //all the logic to add html to screen for 5 day
-
-    // $("#forecast").addClass("card-deck");
-    // var forecastData = $("#forecast").append("<div class='card-deck'>"); 
-    // $(forecastData).addClass("dayCard col-12 col-md-5 col-lg-2");
-
-    //   //nest all p tags in new div
-    //      // displays the date
-    //        var weekDay = $("<p>").html(moment(day.dt_txt).format('dddd'));
-    //        forecastData.append(weekDay);
-    //        weekDay.addClass("weekDay");
-
-
-    //        var weekDate = $("<p>").html(moment(day.dt_txt).format('LL'));
-    //        forecastData.append(weekDate);
-
-
-    //      //an icon representation of weather conditions
-
-    //      //the temperature
-    //         
-    //         forecastData.append($("<p>").text(fiveTemp + "\u00B0 F"));
-
-
-    //      //the humiditity
-    //         var fiveHumid = day.main.humidity
-    //         forecastData.append($("<p>").text("Humidity: " + fiveHumid + "%"));
-    //         // console.log(fiveHumid)
-
-
 }
 
 // save search history
@@ -161,10 +117,11 @@ function showFiveDay(day) {
 
 
 
-
-
 $("#searchBtn").on("click", function (event) {
     getWeather();
+    $("#currentData").empty();
+
+    
 
 })
 
