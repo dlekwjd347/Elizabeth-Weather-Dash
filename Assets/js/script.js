@@ -47,7 +47,7 @@ function getWeather(userChoice) {
             pTag.addClass("index");
             var UVcond
             //UV Index color that indicates whether the conditions are favorable, moderate, or severe
-            if (UVIndex > 2) {
+            if (UVIndex < 2) {
                 $(".index").css("background-color", "#82E0AA");
                 UVcond = $("<p>").text("Favorable");
                 currentdata.append(UVcond);

@@ -1,4 +1,3 @@
-# 06 Server-Side APIs: Weather Dashboard
 To retrieve data from another application's API to use it in the context of my own, I can access their data to use its functionality to retrieve data for cities. 
 This Weather Dashboard will run in the browser using the Weather API from [OpenWeather API](https://openweathermap.org/api).
 
