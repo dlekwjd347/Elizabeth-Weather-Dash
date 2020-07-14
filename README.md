@@ -30,9 +30,9 @@ THEN I am presented with the last searched city forecast
 
 The following image demonstrates the application functionality:
 
-* The URL of the deployed application.
+* https://dlekwjd347.github.io/Elizabeth-Weather-Dash/index.html
 
-* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
+* https://github.com/dlekwjd347/Elizabeth-Weather-Dash
 
 - - -
 © 2019 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.
