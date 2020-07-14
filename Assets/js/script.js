@@ -16,7 +16,6 @@ function getWeather(userChoice) {
     }).then(function (response1) {
         console.log(response1);
         console.log(currentWeather);
-        // if userChoice is not in savedCities then  store it to the local storage
       
         // city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
         var currentdata = $("#current-weather").append("<div>");
@@ -115,8 +114,6 @@ function showFiveDay(day) {
 }
 
 // save search history
-
-
 function saveCity() {
     userChoice = $("#city-input").val().trim();
        if (userChoice !== "") {
