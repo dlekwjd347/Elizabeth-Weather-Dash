@@ -128,7 +128,7 @@ function saveCity() {
    
  
    }
-   displayCities()
+   
 }
 
 console.log(localStorage)
@@ -142,7 +142,7 @@ function displayCities() {
     var getCities = JSON.parse(window.localStorage.getItem('city')) || [];
     console.log(getCities)
     newCities.push(getCities);
-    $("#city-input").val("");
+    
     var saveSearch = $("<p>").text(getCities);
     $("#searches").append(saveSearch);
 
@@ -151,15 +151,20 @@ function clearSearches() {
     window.localStorage.removeItem("city");
     window.location.reload();
 }
+
+
+
 $("#searchBtn").on("click", function (event) {
     event.preventDefault();
     saveCity();
     $("#current-weather").empty();
+    $("#city-input").reset();
        
  })
-
+ displayCities()
 $("#clear").on("click", function (event) {
     console.log(event.target);
+   
     clearSearches();
 });
 
