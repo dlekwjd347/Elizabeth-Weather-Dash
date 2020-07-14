@@ -34,5 +34,6 @@ The following image demonstrates the application functionality:
 
 * https://github.com/dlekwjd347/Elizabeth-Weather-Dash
 
+![deployed URL](Assets\images\Capture.JPG)
 - - -
 © 2019 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.
