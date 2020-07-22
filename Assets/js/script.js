@@ -9,7 +9,7 @@ function getWeather(userChoice) {
     //view current weather conditions for that city
     var apiKey = 'f4984700ddd88edc79d0eb1beb636dff'
     userChoice = $("#city-input").val().trim();
-    currentWeather = `http://api.openweathermap.org/data/2.5/weather?q=${userChoice}&appid=${apiKey}`;
+    currentWeather = `https://api.openweathermap.org/data/2.5/weather?q=${userChoice}&appid=${apiKey}`;
     $.ajax({
         url: currentWeather,
         method: "GET"
@@ -26,10 +26,10 @@ function getWeather(userChoice) {
         var cWind = response1.wind.speed;
         var cityName = response1.name;
         console.log(response1);
-        var qUVindex = `http://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${response1.coord.lat}&lon=${response1.coord.lon}`;
+        var qUVindex = `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${response1.coord.lat}&lon=${response1.coord.lon}`;
         const html = `<div class="card" style="width: 25rem;">
                         <ul class="list-group list-group-flush">
-                        <li class="list-group-item">${cityName} ${moment(response1.dt_txt).format('LL')}<img src=http://openweathermap.org/img/wn/${icon}@2x.png alt="icon" width="60" height="60" /></li>
+                        <li class="list-group-item">${cityName} ${moment(response1.dt_txt).format('LL')}<img src=https://openweathermap.org/img/wn/${icon}@2x.png alt="icon" width="60" height="60" /></li>
                         <li class="list-group-item">Current temp: ${cTemp}\u00B0 F</li>
                         <li class="list-group-item">Humidity: ${cHumidity}%</li>
                         <li class="list-group-item">Wind Speed: ${cWind} mph</li>
@@ -76,7 +76,7 @@ function getWeather(userChoice) {
         })
     })
     // view future weather conditions for that city
-    fiveDay = `http://api.openweathermap.org/data/2.5/forecast?q=${userChoice}&appid=${apiKey}`;
+    fiveDay = `https://api.openweathermap.org/data/2.5/forecast?q=${userChoice}&appid=${apiKey}`;
     $.ajax({
         url: fiveDay,
         method: "GET"
@@ -105,7 +105,7 @@ function showFiveDay(day) {
                 <div class="card-body">
                         <h5 class="card-title">${moment(day.dt_txt).format('dddd')}</h5>
                         <h5 class="card-text">${moment(day.dt_txt).format('LL')}</h5>
-                        <img src=http://openweathermap.org/img/wn/${icon}@2x.png alt="icon" width="50" height="50" />
+                        <img src=https://openweathermap.org/img/wn/${icon}@2x.png alt="icon" width="50" height="50" />
                         <p class="card-text"><small class="text-muted">${fiveTemp + "\u00B0 F"}</small></p>
                         <p class="card-text"><small class="text-muted">Humidity: ${fiveHumid}%</small></p>
         </div>
@@ -123,7 +123,6 @@ function saveCity() {
            getWeather(savedCities);
        }
    
- 
    }
    
 }
